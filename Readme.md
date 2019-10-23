@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Андрей Ковалев](https://up.htmlacademy.ru/php/11/user/329043).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Шершнев](https://htmlacademy.ru/profile/shv_sergey).
 
 ---
 
