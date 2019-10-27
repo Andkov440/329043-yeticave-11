@@ -71,13 +71,13 @@ $goods = [
         <a class="main-header__add-lot button" href="pages/add-lot.html">Добавить лот</a>
 
         <nav class="user-menu">
-            <?if($is_auth == 1): ?>
+            <?php if($is_auth === 1): ?>
             <div class="user-menu__logged">
-                <p><?=$user_name;?></p>
+                <p><?=$user_name; ?></p>
                 <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                 <a class="user-menu__logout" href="#">Выход</a>
             </div>
-            <?else:?>
+            <?php else: ?>
             <ul class="user-menu__list">
                 <li class="user-menu__item">
                     <a href="#">Регистрация</a>
@@ -86,7 +86,7 @@ $goods = [
                     <a href="#">Вход</a>
                 </li>
             </ul>
-            <?endif;?>
+            <?php endif; ?>
         </nav>
     </div>
 </header>
@@ -97,13 +97,11 @@ $goods = [
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <!--заполните этот список из массива категорий-->
-            <? $categories_index = 0; ?>
-            <?while ($categories_index < $categories_count): ?>
+            <?php foreach($categories as $value): ?>
             <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?=$categories[$categories_index];?></a>
+                <a class="promo__link" href="pages/all-lots.html"><?=$value;?></a>
             </li>
-            <? $categories_index ++ ?>
-            <? endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
@@ -112,7 +110,7 @@ $goods = [
         </div>
         <ul class="lots__list">
             <!--заполните этот список из массива с товарами-->
-            <? foreach($goods as $key => $item): ?>
+            <?php foreach($goods as $item): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?=$item['picture']; ?>" width="350" height="260" alt="">
@@ -131,7 +129,7 @@ $goods = [
                     </div>
                 </div>
             </li>
-            <? endforeach; ?>
+            <?php endforeach; ?>
         </ul>
     </section>
 </main>
@@ -141,13 +139,11 @@ $goods = [
     <nav class="nav">
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
-            <? $categories_index = 0; ?>
-            <?while ($categories_index < $categories_count): ?>
+            <?php foreach($categories as $value): ?>
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?=$categories[$categories_index];?></a>
+                <a href="pages/all-lots.html"><?=$value;?></a>
             </li>
-            <? $categories_index ++ ?>
-            <? endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
