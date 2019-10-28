@@ -48,6 +48,7 @@ $goods = [
 ];
 
 function price_format($sum) {
+    $result = '';
     $sum = ceil($sum);
     if($sum >= 1000) {
         $result = number_format($sum, 0, '', ' ');
