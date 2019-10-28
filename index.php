@@ -46,6 +46,15 @@ $goods = [
         'picture' => 'img/lot-6.jpg'
     ],
 ];
+
+function price_format($sum) {
+    $sum = ceil($sum);
+    if($sum >= 1000) {
+        $result = number_format($sum, 0, '', ' ');
+    }
+    $result.=' ₽';
+    return $result;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -121,7 +130,7 @@ $goods = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$item['price']; ?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=price_format($item['price']); ?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
