@@ -12,7 +12,8 @@ require_once('helpers.php');
 
 $page_content = include_template('main.php', [
     'categories' => $categories,
-    'goods' => $goods]);
+    'goods' => $goods
+]);
 
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
@@ -23,4 +24,3 @@ $layout_content = include_template('layout.php', [
 ]);
 
 print($layout_content);
-?>

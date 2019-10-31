@@ -10,7 +10,5 @@ function price_format($sum) {
 }
 
 function esc($str) {
-    $text = htmlspecialchars($str);
-
-    return $text;
+    return htmlspecialchars($str, ENT_QUOTES);
 }
