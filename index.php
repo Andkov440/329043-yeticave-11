@@ -1,14 +1,13 @@
 <?php
 require_once('data.php');
 require_once('functions.php');
+require_once('helpers.php');
 
 $is_auth = rand(0, 1);
 
 $user_name = 'Андрей'; // укажите здесь ваше имя
 
 $categories_count = count($categories);
-
-require_once('helpers.php');
 
 $page_content = include_template('main.php', [
     'categories' => $categories,
