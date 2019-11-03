@@ -30,15 +30,9 @@
                             <span class="lot__cost"><?=price_format(esc($item['price'])); ?></span>
                         </div>
                         <?php $timer = time_left($item['expiration_date']);?>
-                        <?php if((int)$timer[0] === 0) :?>
-                            <div class="lot__timer timer timer--finishing">
-                                <?=$timer[0].':'.$timer[1];?>
-                            </div>
-                        <?php else: ?>
-                        <div class="lot__timer timer">
+                        <div class="<?=(int)$timer[0] === 0 ? "lot__timer timer timer--finishing" : "lot__timer timer";?>">
                             <?=$timer[0].':'.$timer[1];?>
                         </div>
-                        <?php endif; ?>
                     </div>
                 </div>
             </li>

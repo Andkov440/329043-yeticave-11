@@ -27,4 +27,3 @@ function time_left($remain_time) {
     }
     return [$hours, $minutes];
 }
-var_dump(time_left('2019-11-06'));
