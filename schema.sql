@@ -6,11 +6,11 @@ CREATE TABLE users(
     user_id INT(3) NOT NULL AUTO_INCREMENT,
     registration_date DATETIME,
     email VARCHAR(40) UNIQUE NOT NULL,
-    password VARCHAR(10) NOT NULL,
+    password VARCHAR NOT NULL,
     name VARCHAR(30) NOT NULL,
     contacts VARCHAR(200) NOT NULL,
-    user_lots INT(3),
-    rates INT(3),
+    lot_id INT(10),
+    rate_id INT(10),
     PRIMARY KEY(user_id)
 );
 
@@ -23,9 +23,9 @@ CREATE TABLE lot(
     starting_price INT NOT NULL,
     end_date DATE NOT NULL,
     step_rate  INT NOT NULL,
-    author INT(3),
-    winer INT(3),
-    category INT(1),
+    user_id INT(10),
+    winer_id INT(10),
+    category_id INT(1),
     PRIMARY KEY(lot_id)
 );
 
@@ -40,23 +40,10 @@ CREATE TABLE rate(
     rate_id INT NOT NULL AUTO_INCREMENT,
     creation_date DATETIME,
     price INT(10),
-    lot INT(3),
-    user INT(3),
+    lot_id INT(10),
+    user_id INT(10),
     PRIMARY KEY(rate_id)
 );
 
 CREATE INDEX lot_description ON lot(description);
 CREATE INDEX lot_title ON lot(title);
-
-ALTER TABLE users ADD FOREIGN KEY (user_lots) REFERENCES lot(lot_id);
-ALTER TABLE users ADD FOREIGN KEY (rates) REFERENCES rate(rate_id);
-
-ALTER TABLE lot ADD FOREIGN KEY (author) REFERENCES users(user_id);
-ALTER TABLE lot ADD FOREIGN KEY (winer) REFERENCES users(user_id);
-ALTER TABLE lot ADD FOREIGN KEY (category) REFERENCES category(category_id);
-
-ALTER TABLE rate ADD FOREIGN KEY (lot) REFERENCES lot(lot_id);
-ALTER TABLE rate ADD FOREIGN KEY (user) REFERENCES users(user_id);
-
-
-
