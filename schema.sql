@@ -9,20 +9,18 @@ CREATE TABLE users(
     password VARCHAR(20) NOT NULL,
     name VARCHAR(30) NOT NULL,
     contacts VARCHAR(200) NOT NULL,
-    lot_id INT(10),
-    rate_id INT(10),
     PRIMARY KEY(user_id)
 );
 
 CREATE TABLE lot(
     lot_id INT NOT NULL AUTO_INCREMENT,
     creation_date DATETIME,
-    title VARCHAR(15) NOT NULL,
+    title VARCHAR(80) NOT NULL,
     description VARCHAR(256) NOT NULL,
     image VARCHAR(50) NOT NULL,
     starting_price INT NOT NULL,
     end_date DATE NOT NULL,
-    step_rate  INT NOT NULL,
+    step_rate INT NOT NULL,
     user_id INT(10),
     winer_id INT(10),
     category_id INT(1),
