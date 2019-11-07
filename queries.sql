@@ -6,7 +6,7 @@ VALUES ('Доски и лыжи', 'boards'),
        ('Инструменты', 'tools'),
        ('Разное', 'other');
 
-INSERT INTO users (registration_date, email, password, name, contacts, lot_id, rate_id)
+INSERT INTO users (registration_date, email, password, name, contacts)
 VALUES ('2019-09-13 15:02:12', 'svs7@yandex.ru', '33', 'Владимир', 'Ростов-на-Дону, +79043458956'),
        ('2019-09-26 15:11:25', 'arina_m@list.ru', 'qwerty', 'Арина', 'Москва, +74952003456'),
        ('2019-09-10 08:50:44', 'artushkov@prognoz.ru', '123456', 'Виктор', 'Воронеж, +79612317845');
@@ -25,7 +25,7 @@ VALUES ('2019-10-19 10:11:13', 9200, 3, 1),
 
 SELECT * FROM category;
 
-SELECT l.title, l.starting_price, l.image, l.step_rate, c.title
+SELECT l.title, l.starting_price, l.image, l.step_rate, l.end_date, c.title
 FROM lot l
     INNER JOIN category c
     ON l.category_id = c.category_id
@@ -39,12 +39,11 @@ WHERE lot_id = 3;
 
 UPDATE lot
 SET title = 'DC Ply Mens 2019/2020 Snowboard'
-WHERE id = 2;
+WHERE lot_id = 2;
 
 SELECT lot.title, rate.creation_date, rate.price
 FROM rate
     INNER JOIN lot
     ON rate.lot_id = lot.lot_id
 WHERE lot.lot_id = 3
-ORDER BY rate.creation_date
-ASC;
+ORDER BY rate.creation_date;

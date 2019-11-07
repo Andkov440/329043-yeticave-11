@@ -45,3 +45,28 @@ CREATE TABLE rate(
 
 CREATE INDEX lot_description ON lot(description);
 CREATE INDEX lot_title ON lot(title);
+
+SELECT l.title, l.starting_price, l.image, l.step_rate, c.title
+FROM lot l
+    INNER JOIN category c
+    ON l.category_id = c.category_id
+WHERE end_date > NOW()
+ORDER BY end_date ASC;
+
+SELECT l.creation_date, l.title, l.description, l.image, l.starting_price, l.end_date, l.step_rate, c.title
+FROM lot l
+    INNER JOIN category c
+    ON l.category_id = c.category_id
+WHERE lot_id = 3;
+
+UPDATE lot
+SET title = 'DC Ply Mens 2019/2020 Snowboard'
+WHERE id = 2;
+
+SELECT lot.title, rate.creation_date, rate.price
+FROM rate
+    INNER JOIN lot
+    ON rate.lot_id = lot.lot_id
+WHERE lot.lot_id = 3
+ORDER BY rate.creation_date
+ASC;

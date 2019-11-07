@@ -27,3 +27,23 @@ function time_left($remain_time) {
     }
     return [$hours, $minutes];
 }
+
+function db_fetch_data($link, $sql, $data = []) {
+    $result = [];
+    $stmt = db_get_prepare_stmt($link, $sql, $data);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    if ($res) {
+        $result = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    }
+    return $result;
+}
+
+function db_insert_data($link, $sql, $data = []) {
+    $stmt = db_get_prepare_stmt($link, $sql, $data);
+    $result = mysqli_stmt_execute($stmt);
+    if ($result) {
+        $result = mysqli_insert_id($link);
+    }
+    return $result;
+}
