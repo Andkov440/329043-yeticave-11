@@ -1,29 +1,12 @@
 <?php
+require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
 
-$is_auth = rand(0, 1);
-
-$user_name = 'Андрей'; // укажите здесь ваше имя
-
-$con = mysqli_connect('localhost', 'root', '33', 'yeticave');
-
-if(!$con) {
-    $error = mysqli_connect_error();
-    printf('Ошибка соединения: %s/n', $error);
-}
-
-$sql = 'SELECT title, symbol_code FROM category';
-mysqli_set_charset($con, 'utf8');
-
-$categories = db_fetch_all_data($con, $sql);
-
-$categories_count = count($categories);
-
-$sql = 'SELECT l.lot_id, l.title, l.starting_price, l.image, l.step_rate, l.end_date, c.title lot_title
+$sql = 'SELECT l.id, l.title, l.starting_price, l.image, l.step_rate, l.end_date, c.title lot_title
 FROM lot l
     INNER JOIN category c
-    ON l.category_id = c.category_id
+    ON l.category_id = c.id
 WHERE end_date > NOW()';
 
 $goods = db_fetch_all_data($con, $sql);

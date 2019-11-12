@@ -1,4 +1,15 @@
 <?php
+require_once('helpers.php');
+require_once('init.php');
+
+$is_auth = rand(0, 1);
+
+$user_name = 'Андрей';
+$sql = 'SELECT title, symbol_code FROM category';
+
+$categories = db_fetch_all_data($con, $sql);
+
+$categories_count = count($categories);
 function price_format($sum) {
     $result = '';
     $sum = ceil($sum);
@@ -43,15 +54,11 @@ function db_fetch_first_element($link, $sql, $data = []) {
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
-    $result = ($res) ? mysqli_fetch_assoc($res) : mysqli_error($link);
-
-    return $result;
+    return ($res) ? mysqli_fetch_assoc($res) : mysqli_error($link);
 }
 
 function db_insert_data($link, $sql, $data = []) {
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     $result = mysqli_stmt_execute($stmt);
-    $result = ($result) ? mysqli_insert_id($link) : mysqli_error($link);
-
-    return $result;
+    return ($result) ? mysqli_insert_id($link) : mysqli_error($link);
 }
