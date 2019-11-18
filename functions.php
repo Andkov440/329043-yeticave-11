@@ -46,7 +46,6 @@ function time_left($remain_time)
 
 function db_fetch_all_data($link, $sql, $data = [])
 {
-    $result = [];
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
@@ -55,7 +54,6 @@ function db_fetch_all_data($link, $sql, $data = [])
 
 function db_fetch_first_element($link, $sql, $data = [])
 {
-    $result = [];
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
@@ -101,17 +99,13 @@ function validateDate($value) {
     $seconds_in_day = 86400;
     if ($value) {
         $timestamp_diff = strtotime($value) - time();
-        if ($value !== date_create_from_format('Y-m-d', $value)) {
+        if (date('Y-m-d', strtotime($value)) !== $value) {
             return "Неправильный формат даты";
         }
-        elseif ($timestamp_diff < $seconds_in_day) {
+        if ($timestamp_diff < $seconds_in_day) {
             return "Указанная дата меньше текущей даты";
         }
     }
 
     return null;
-}
-
-function getPostVal($name) {
-    return filter_input(INPUT_POST, $name);
 }
