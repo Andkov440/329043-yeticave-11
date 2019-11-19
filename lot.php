@@ -8,7 +8,7 @@ $sql = 'SELECT l.title, l.starting_price, l.image, l.description, l.end_date, c.
             FROM lot l
             INNER JOIN category c
             ON l.category_id = c.id
-            WHERE l.id ='.$lot_number;
+            WHERE l.id =' . $lot_number;
 
 $lot_data = db_fetch_first_element($con, $sql);
 

@@ -13,7 +13,8 @@ $goods = db_fetch_all_data($con, $sql);
 
 $page_content = include_template('main.php', [
     'categories' => $categories,
-    'goods' => $goods]);
+    'goods' => $goods
+]);
 
 $layout_content = include_template('layout.php', [
     'content' => $page_content,

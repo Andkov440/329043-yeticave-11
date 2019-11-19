@@ -1,7 +1,7 @@
 <?php
 $con = mysqli_connect('localhost', 'root', '33', 'yeticave');
 mysqli_set_charset($con, 'utf8');
-if(!$con) {
+if (!$con) {
     $error = mysqli_connect_error();
     printf('Ошибка соединения: %s/n', $error);
 }
