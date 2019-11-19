@@ -2,10 +2,10 @@
 require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
-
+$errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required = ['lot-name', 'category', 'message', 'lot-rate', 'lot-date', 'lot-step'];
-    $errors = [];
+
     $valid_mime = ['image/jpeg', 'image/png'];
 
     $rules = [
