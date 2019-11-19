@@ -9,12 +9,12 @@ CREATE TABLE users(
     password VARCHAR(20) NOT NULL,
     name VARCHAR(30) NOT NULL,
     contacts VARCHAR(200) NOT NULL,
-    PRIMARY KEY(user_id)
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE lot(
     id INT NOT NULL AUTO_INCREMENT,
-    creation_date DATETIME NOT NULL,
+    creation_date DATETIME NOT NULL CURRENT_TIMESTAMP,
     title VARCHAR(80) NOT NULL,
     description VARCHAR(256) NOT NULL,
     image VARCHAR(50) NOT NULL,
@@ -24,14 +24,14 @@ CREATE TABLE lot(
     user_id INT(10) NOT NULL,
     winer_id INT(10),
     category_id INT(1) NOT NULL,
-    PRIMARY KEY(lot_id)
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE category(
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(40) UNIQUE NOT NULL,
     symbol_code VARCHAR(10) UNIQUE NOT NULL,
-    PRIMARY KEY(category_id)
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE rate(
@@ -40,7 +40,7 @@ CREATE TABLE rate(
     price INT(10),
     lot_id INT(10),
     user_id INT(10),
-    PRIMARY KEY(rate_id)
+    PRIMARY KEY(id)
 );
 
 CREATE INDEX lot_description ON lot(description);

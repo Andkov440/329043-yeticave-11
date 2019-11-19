@@ -3,13 +3,13 @@ require_once('helpers.php');
 require_once('init.php');
 
 $is_auth = rand(0, 1);
-$cats_ids = [];
+$category_ids = [];
 
 $user_name = 'Андрей';
 $sql = 'SELECT id, title, symbol_code FROM category';
 
 $categories = db_fetch_all_data($con, $sql);
-$cats_ids = array_column($categories, 'id');
+$category_ids = array_column($categories, 'id');
 
 $categories_count = count($categories);
 function price_format($sum)
@@ -68,40 +68,24 @@ function db_insert_data($link, $sql, $data = [])
 }
 
 function validateNumber($value) {
-    if ($value) {
-        if ($value <= 0) {
-            return "Значение должно быть больше ноля";
-        }
-    }
-    return null;
+    return (!empty($value) && $value <= 0) ? 'Значение должно быть больше ноля' : null;
 }
 
 function validateCategory($id, $allowed_list) {
-    if (!in_array($id, $allowed_list)) {
-        return "Указана несуществующая категория";
-    }
-
-    return null;
+    return !in_array($id, $allowed_list) ? 'Указана несуществующая категория' : null;
 }
 
 function validateLength($value, $min, $max) {
-    if ($value) {
-        $len = strlen($value);
-        if ($len < $min or $len > $max) {
-            return "Значение должно быть от $min до $max символов";
-        }
-    }
-
-    return null;
+    return (strlen($value) < $min or strlen($value) > $max) ? 'Значение должно быть от '.$min.' до '.$max.' символов' : null;
 }
 
 function validateDate($value) {
     $seconds_in_day = 86400;
     if ($value) {
-        $timestamp_diff = strtotime($value) - time();
         if (date('Y-m-d', strtotime($value)) !== $value) {
             return "Неправильный формат даты";
         }
+        $timestamp_diff = strtotime($value) - time();
         if ($timestamp_diff < $seconds_in_day) {
             return "Указанная дата меньше текущей даты";
         }
