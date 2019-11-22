@@ -93,3 +93,8 @@ function validateDate($value) {
 
     return null;
 }
+
+function validateEmail($value)
+{
+    return !filter_var($value, FILTER_VALIDATE_EMAIL) ? 'Введите корректный email' : null;
+}
