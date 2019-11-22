@@ -24,7 +24,7 @@
                 <option>Выберите категорию</option>
                 <?php foreach ($categories as $value): ?>
                     <option value='<?= esc($value['id']); ?>'
-                            <?= !empty($_POST) && $_POST["category"] == esc($value['id']) ? " selected" : "" ?>><?= esc($value['title']); ?></option>
+                            <?= !empty($_POST) && $_POST["category"] === esc($value['id']) ? " selected" : "" ?>><?= esc($value['title']); ?></option>
                 <?php endforeach; ?>
             </select>
             <span class="form__error"><?= $errors['category']; ?></span>
