@@ -62,10 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['jpg_img'] = 'Вы не загрузили файл';
     }
 
-    if (count($errors)) {
-        $add_content = include_template('add_template.php',
-            ['errors' => $errors, 'categories' => $categories]);
-    } else {
+    if (!count($errors)) {
         move_uploaded_file($_FILES['jpg_img']['tmp_name'], 'uploads/' . $filename);
         $new_lot['path'] = $filename;
         $sql = "SELECT id FROM category WHERE title = '" . $new_lot['category'] . "'";
@@ -79,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: lot.php?id=" . $lot_id);
     }
 }
-$add_content = include_template('add_template.php', ['errors' => $errors, 'categories' => $categories]);
+$add_content = include_template('add_lot.php', ['errors' => $errors, 'categories' => $categories]);
 
 $layout_content = include_template('layout.php', [
     'content' => $add_content,

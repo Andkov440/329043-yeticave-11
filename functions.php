@@ -49,7 +49,7 @@ function db_fetch_all_data($link, $sql, $data = [])
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
-    return ($res) ? mysqli_fetch_all($res, MYSQLI_ASSOC) : mysqli_error($link);
+    return ($res) ? mysqli_fetch_all($res, MYSQLI_ASSOC) : die('Ошибка соединения с БД');
 }
 
 function db_fetch_first_element($link, $sql, $data = [])
@@ -57,14 +57,14 @@ function db_fetch_first_element($link, $sql, $data = [])
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
-    return ($res) ? mysqli_fetch_assoc($res) : mysqli_error($link);
+    return ($res) ? mysqli_fetch_assoc($res) : die('Ошибка соединения с БД');
 }
 
 function db_insert_data($link, $sql, $data = [])
 {
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     $result = mysqli_stmt_execute($stmt);
-    return ($result) ? mysqli_insert_id($link) : mysqli_error($link);
+    return ($result) ? mysqli_insert_id($link) : die('Ошибка соединения с БД');
 }
 
 function validateNumber($value) {

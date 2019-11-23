@@ -47,10 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $errors = array_filter($errors);
 
-    if (count($errors)) {
-        $add_content = include_template('singup_template.php',
-            ['errors' => $errors, 'categories' => $categories]);
-    } else {
+    if (!count($errors)) {
         $new_user['password'] = password_hash($new_user['password'], PASSWORD_DEFAULT);
         $sql = 'INSERT INTO users (email, password, name, contacts)
                 VALUES (?, ?, ?, ?)';
@@ -58,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: login.php");
     }
 }
-$add_content = include_template('singup_template.php', ['errors' => $errors, 'categories' => $categories]);
+$add_content = include_template('signup_user.php', ['errors' => $errors, 'categories' => $categories]);
 
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
