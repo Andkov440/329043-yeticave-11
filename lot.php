@@ -14,7 +14,7 @@ $lot_data = db_fetch_first_element($con, $sql);
 
 if ($lot_data) {
 
-    $lot_content = include_template('lot_template.php', ['lot_data' => $lot_data, 'categories' => $categories]);
+    $lot_content = include_template('lot_page.php', ['lot_data' => $lot_data, 'categories' => $categories]);
 
     $layout_content = include_template('layout.php', [
         'content' => $lot_content,

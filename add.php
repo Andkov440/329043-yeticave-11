@@ -62,10 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['jpg_img'] = 'Вы не загрузили файл';
     }
 
-    if (count($errors)) {
-        $add_content = include_template('add_template.php',
-            ['errors' => $errors, 'categories' => $categories]);
-    } else {
+    if (!count($errors)) {
         move_uploaded_file($_FILES['jpg_img']['tmp_name'], 'uploads/' . $filename);
         $new_lot['path'] = $filename;
         $sql = "SELECT id FROM category WHERE title = '" . $new_lot['category'] . "'";
@@ -75,15 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new_lot['winer'] = 100;
         $sql = 'INSERT INTO lot (title, description, category_id, end_date, starting_price, step_rate, image, user_id, winer_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        $result = db_insert_data($con, $sql, $new_lot);
-        if ($result) {
-            $lot_id = mysqli_insert_id($con);
-            header("Location: lot.php?id=" . $lot_id);
-        }
+        $lot_id = db_insert_data($con, $sql, $new_lot);
+        header("Location: lot.php?id=" . $lot_id);
     }
 }
-
-$add_content = include_template('add_template.php', ['errors' => $errors, 'categories' => $categories]);
+$add_content = include_template('add_lot.php', ['errors' => $errors, 'categories' => $categories]);
 
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
