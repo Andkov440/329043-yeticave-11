@@ -2,7 +2,10 @@
 require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
-
+if (!isset($_SESSION['user'])) {
+    http_response_code(403);
+    exit();
+}
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

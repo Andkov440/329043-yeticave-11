@@ -20,8 +20,6 @@ if ($lot_data) {
         'content' => $lot_content,
         'title' => $lot_data['title'],
         'categories' => $categories,
-        'is_auth' => $is_auth,
-        'user_name' => $user_name
     ]);
 
     print ($layout_content);

@@ -2,7 +2,6 @@
 require_once('helpers.php');
 require_once('init.php');
 
-$is_auth = rand(0, 1);
 $category_ids = [];
 
 $user_name = 'Андрей';
