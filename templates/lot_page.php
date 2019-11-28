@@ -1,13 +1,4 @@
-<main>
-<nav class="nav">
-        <ul class="nav__list container">
-            <?php foreach($categories as $value): ?>
-               <li class="nav__item">
-                    <a href="all-lots.html"><?=esc($value['title']);?></a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
+<?= $nav_menu; ?>
 <section class="lot-item container">
     <h2><?= esc($lot_data['title']); ?></h2>
     <div class="lot-item__content">

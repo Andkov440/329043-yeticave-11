@@ -13,13 +13,14 @@ $sql = 'SELECT l.title, l.starting_price, l.image, l.description, l.end_date, c.
 $lot_data = db_fetch_first_element($con, $sql);
 
 if ($lot_data) {
-
-    $lot_content = include_template('lot_page.php', ['lot_data' => $lot_data, 'categories' => $categories]);
+    $menu = include_template('nav_menu.php', ['categories' => $categories]);
+    $lot_content = include_template('lot_page.php', ['lot_data' => $lot_data, 'nav_menu' => $menu]);
 
     $layout_content = include_template('layout.php', [
         'content' => $lot_content,
         'title' => $lot_data['title'],
         'categories' => $categories,
+        'user_name' => $_SESSION['user']['name']
     ]);
 
     print ($layout_content);

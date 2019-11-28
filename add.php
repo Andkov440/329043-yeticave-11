@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (in_array($key, $required) && empty($value)) {
             $errors[$key] = "Заполните это поле";
         }
+        $new_lot[$key] = trim($new_lot[$key]);
     }
 
     $errors = array_filter($errors);
@@ -80,12 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: lot.php?id=" . $lot_id);
     }
 }
-$add_content = include_template('add_lot.php', ['errors' => $errors, 'categories' => $categories]);
-
+$menu = include_template('nav_menu.php', ['categories' => $categories]);
+$add_content = include_template('add_lot.php', ['nav_menu' => $menu, 'errors' => $errors, 'categories' => $categories]);
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
     'title' => 'Добавление лота',
     'categories' => $categories,
+    'user_name' => $_SESSION['user']['name']
 ]);
 
 print ($layout_content);

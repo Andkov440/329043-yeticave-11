@@ -3,8 +3,8 @@ require_once('helpers.php');
 require_once('init.php');
 
 $category_ids = [];
+$user_name = $_SESSION['user']['name'] ?? '';
 
-$user_name = 'Андрей';
 $sql = 'SELECT id, title, symbol_code FROM category';
 
 $categories = db_fetch_all_data($con, $sql);
@@ -24,9 +24,7 @@ function price_format($sum)
 
 function esc($str)
 {
-    $text = htmlspecialchars($str);
-
-    return $text;
+    return htmlspecialchars($str);
 }
 
 function time_left($remain_time)
@@ -66,19 +64,23 @@ function db_insert_data($link, $sql, $data = [])
     return ($result) ? mysqli_insert_id($link) : die('Ошибка соединения с БД');
 }
 
-function validateNumber($value) {
+function validateNumber($value)
+{
     return (!empty($value) && $value <= 0) ? 'Значение должно быть больше ноля' : null;
 }
 
-function validateCategory($id, $allowed_list) {
+function validateCategory($id, $allowed_list)
+{
     return !in_array($id, $allowed_list) ? 'Указана несуществующая категория' : null;
 }
 
-function validateLength($value, $min, $max) {
-    return (strlen($value) < $min or strlen($value) > $max) ? 'Значение должно быть от '.$min.' до '.$max.' символов' : null;
+function validateLength($value, $min, $max)
+{
+    return (strlen($value) < $min or strlen($value) > $max) ? 'Значение должно быть от ' . $min . ' до ' . $max . ' символов' : null;
 }
 
-function validateDate($value) {
+function validateDate($value)
+{
     $seconds_in_day = 86400;
     if ($value) {
         if (date('Y-m-d', strtotime($value)) !== $value) {

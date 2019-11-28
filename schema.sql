@@ -45,6 +45,7 @@ CREATE TABLE rate(
 
 CREATE INDEX lot_description ON lot(description);
 CREATE INDEX lot_title ON lot(title);
+CREATE FULLTEXT INDEX lot_ft_search ON lot(title, description);
 
 SELECT l.title, l.starting_price, l.image, l.step_rate, c.title
 FROM lot l
