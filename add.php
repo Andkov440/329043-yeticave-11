@@ -2,6 +2,10 @@
 require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
+if (!isset($_SESSION['user'])) {
+    http_response_code(403);
+    exit();
+}
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required = ['lot-name', 'category', 'message', 'lot-rate', 'lot-date', 'lot-step'];
@@ -47,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (in_array($key, $required) && empty($value)) {
             $errors[$key] = "Заполните это поле";
         }
+        $new_lot[$key] = trim($new_lot[$key]);
     }
 
     $errors = array_filter($errors);
@@ -68,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "SELECT id FROM category WHERE title = '" . $new_lot['category'] . "'";
         $cat_id = db_fetch_first_element($con, $sql);
 
-        $new_lot['username'] = 1;
+        $new_lot['username'] = $_SESSION['user']['id'];
         $new_lot['winer'] = 100;
         $sql = 'INSERT INTO lot (title, description, category_id, end_date, starting_price, step_rate, image, user_id, winer_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -76,14 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: lot.php?id=" . $lot_id);
     }
 }
-$add_content = include_template('add_lot.php', ['errors' => $errors, 'categories' => $categories]);
-
+$menu = include_template('nav_menu.php', ['categories' => $categories]);
+$add_content = include_template('add_lot.php', ['nav_menu' => $menu, 'errors' => $errors, 'categories' => $categories]);
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
     'title' => 'Добавление лота',
     'categories' => $categories,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name
+    'user_name' => $_SESSION['user']['name']
 ]);
 
 print ($layout_content);

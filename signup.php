@@ -2,7 +2,10 @@
 require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
-
+if (isset($_SESSION['user'])) {
+    http_response_code(403);
+    exit();
+}
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,7 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (in_array($key, $required) && empty($value)) {
             $errors[$key] = "Заполните это поле";
         }
+        $new_user[$key] = trim($new_user[$key]);
     }
+
     $sql = "SELECT id FROM users WHERE email = '" . $new_user['email'] . "'";
     $res = mysqli_query($con, $sql);
     if (mysqli_num_rows($res) > 0) {
@@ -55,14 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: login.php");
     }
 }
-$add_content = include_template('signup_user.php', ['errors' => $errors, 'categories' => $categories]);
+$menu = include_template('nav_menu.php', ['categories' => $categories]);
+$add_content = include_template('signup_user.php', ['errors' => $errors, 'nav_menu' => $menu]);
 
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
     'title' => 'Регистрация',
     'categories' => $categories,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name
 ]);
 
 print ($layout_content);

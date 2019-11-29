@@ -16,18 +16,17 @@
             <a class="main-header__logo">
                 <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
-            <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru" autocomplete="off">
-                <input type="search" name="search" placeholder="Поиск лота">
+            <form class="main-header__search" method="get" action="search.php" autocomplete="off">
+                <input type="search" name="search" placeholder="Поиск лота" value="<?= $_GET['search'] ?? '' ?>">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
-
             <nav class="user-menu">
-                <?php if($is_auth === 1): ?>
+                <?php if (isset($_SESSION['user'])): ?>
                     <div class="user-menu__logged">
-                        <p><?=$user_name; ?></p>
+                        <p><?= $user_name; ?></p>
                         <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
-                        <a class="user-menu__logout" href="#">Выход</a>
+                        <a class="user-menu__logout" href="logout.php">Выход</a>
                     </div>
                 <?php else: ?>
                     <ul class="user-menu__list">
@@ -35,7 +34,7 @@
                             <a href="signup.php">Регистрация</a>
                         </li>
                         <li class="user-menu__item">
-                            <a href="#">Вход</a>
+                            <a href="login.php">Вход</a>
                         </li>
                     </ul>
                 <?php endif; ?>
@@ -51,7 +50,7 @@
             <!--заполните этот список из массива категорий-->
             <?php foreach($categories as $value): ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?=esc($value['title']);?></a>
+                    <a href="index.php?id=<?= esc($value['id']); ?>"><?= esc($value['title']); ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

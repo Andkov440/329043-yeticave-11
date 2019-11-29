@@ -5,8 +5,8 @@
     <ul class="promo__list">
         <!--заполните этот список из массива категорий-->
         <?php foreach($categories as $value): ?>
-            <li class="promo__item promo__item--<?=esc($value['symbol_code']) ?>">
-                <a class="promo__link" href="pages/all-lots.html"><?=esc($value['title']);?></a>
+            <li class="promo__item promo__item--<?= esc($value['symbol_code']) ?>">
+                <a class="promo__link" href="index.php?id=<?= esc($value['id']); ?>"><?= esc($value['title']); ?></a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -16,7 +16,6 @@
         <h2>Открытые лоты</h2>
     </div>
     <ul class="lots__list">
-        <!--заполните этот список из массива с товарами-->
         <?php foreach($goods as $item): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
@@ -30,9 +29,10 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost"><?=price_format(esc($item['starting_price'])); ?></span>
                         </div>
-                        <?php $timer = time_left($item['end_date']);?>
-                        <div class="<?=(int)$timer[0] === 0 ? "lot__timer timer timer--finishing" : "lot__timer timer";?>">
-                            <?=$timer[0].':'.$timer[1];?>
+                        <?php $timer = time_left($item['end_date']); ?>
+                        <div
+                            class="<?= (int)$timer[0] === 0 ? "lot__timer timer timer--finishing" : "lot__timer timer"; ?>">
+                            <?= $timer[0] . ':' . $timer[1]; ?>
                         </div>
                     </div>
                 </div>
@@ -40,4 +40,5 @@
         <?php endforeach; ?>
     </ul>
 </section>
+    <?= $pagination; ?>
 </main>
