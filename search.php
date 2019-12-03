@@ -4,7 +4,7 @@ require_once('functions.php');
 require_once('helpers.php');
 
 $search = $_GET['search'] ?? '';
-
+$filename = basename(__FILE__);
 $page_items = 9;
 $cur_page = $_GET['page'] ?? 1;
 $offset = ($cur_page - 1) * $page_items;
@@ -13,12 +13,17 @@ if (!empty($search)) {
     $search = trim($search);
 
     $count_sql = mysqli_query($con,
-        'SELECT COUNT(*) as cnt FROM lot WHERE MATCH(title, description) AGAINST("' . $search . '")');
+        'SELECT COUNT(*) as cnt
+                FROM lot
+                WHERE MATCH(title, description) AGAINST("' . $search . '")
+                AND end_date > NOW()');
+
     $items_count = mysqli_fetch_assoc($count_sql)['cnt'];
 
     $sql = 'SELECT id, title, starting_price, image, step_rate, end_date
             FROM lot
             WHERE MATCH(title, description) AGAINST(?)
+            AND end_date > NOW()
             ORDER BY creation_date ASC
             LIMIT ' . $page_items . '
             OFFSET ' . $offset;
@@ -26,7 +31,6 @@ if (!empty($search)) {
 } else {
     $result = '';
 }
-
 $pages_count = ceil($items_count / $page_items);
 $pages = range(1, $pages_count);
 
@@ -35,7 +39,9 @@ $menu = include_template('nav_menu.php', ['categories' => $categories]);
 $pagination = include_template('pagination.php', [
     'pages' => $pages,
     'pages_count' => $pages_count,
-    'cur_page' => $cur_page
+    'cur_page' => $cur_page,
+    'filename' => $filename,
+    'search' => $search
 ]);
 
 $add_content = include_template('search_lot.php', [
