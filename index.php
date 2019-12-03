@@ -2,10 +2,12 @@
 require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
+
 $page_items = 9;
 $ids = $_GET['id'] ?? implode(', ', $category_ids);
 $cur_page = $_GET['page'] ?? 1;
 $offset = ($cur_page - 1) * $page_items;
+$filename = basename(__FILE__);
 
 $result = mysqli_query($con, "SELECT COUNT(*) as cnt FROM lot WHERE end_date > NOW()");
 $items_count = mysqli_fetch_assoc($result)['cnt'];
