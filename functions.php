@@ -38,7 +38,11 @@ function time_left($remain_time)
     if ($minutes < 10) {
         $minutes = str_pad($minutes, 2, "0", STR_PAD_LEFT);
     }
-    return [$hours, $minutes];
+    $seconds = $timestamp_diff % 60;
+    if ($seconds < 10) {
+        $seconds = str_pad($seconds, 2, "0", STR_PAD_LEFT);
+    }
+    return [$hours, $minutes, $seconds];
 }
 
 function db_fetch_all_data($link, $sql, $data = [])
@@ -98,4 +102,24 @@ function validateDate($value)
 function validateEmail($value)
 {
     return !filter_var($value, FILTER_VALIDATE_EMAIL) ? 'Введите корректный email' : null;
+}
+
+function time_to_human_format($value)
+{
+    setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
+    $seconds_in_hour = 3600;
+    $timestamp_diff = time() - strtotime($value);
+    $minutes = ltrim(strftime('%M ', $timestamp_diff), '0');
+    if (($timestamp_diff > 60) && ($timestamp_diff < $seconds_in_hour)) {
+        return $minutes . get_noun_plural_form(strftime('%M', $timestamp_diff), 'минута', 'минуты', 'минут') . ' назад';
+    } else {
+        if ($timestamp_diff < 60) {
+            return 'только что';
+        } else {
+            if ($timestamp_diff === $seconds_in_hour) {
+                return 'Час назад';
+            }
+        }
+    }
+    return strftime('%d.%m.%y в %H:%M', strtotime($value));
 }

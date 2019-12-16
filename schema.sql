@@ -36,10 +36,10 @@ CREATE TABLE category(
 
 CREATE TABLE rate(
     id INT NOT NULL AUTO_INCREMENT,
-    creation_date DATETIME,
-    price INT(10),
-    lot_id INT(10),
-    user_id INT(10),
+    creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    price INT(10) NOT NULL,
+    lot_id INT(10) NOT NULL,
+    user_id INT(10) NOT NULL,
     PRIMARY KEY(id)
 );
 
