@@ -81,5 +81,5 @@ if ($lot_data) {
 
     print ($layout_content);
 } else {
-    http_response_code(404);
+    http_response_code('Location: 404.php', 404);
 }
