@@ -4,10 +4,11 @@ require_once('functions.php');
 require_once('helpers.php');
 
 $search = $_GET['search'] ?? '';
+$user_name = $_SESSION['user']['name'] ?? '';
 $filename = basename(__FILE__);
-$page_items = 9;
-$cur_page = $_GET['page'] ?? 1;
-$offset = ($cur_page - 1) * $page_items;
+$PAGE_ITEMS = 9;
+$CURRENT_PAGE = $_GET['page'] ?? 1;
+$offset = ($CURRENT_PAGE - 1) * $PAGE_ITEMS;
 
 if (!empty($search)) {
     $search = trim($search);
@@ -25,21 +26,21 @@ if (!empty($search)) {
             WHERE MATCH(title, description) AGAINST(?)
             AND end_date > NOW()
             ORDER BY creation_date ASC
-            LIMIT ' . $page_items . '
+            LIMIT ' . $PAGE_ITEMS . '
             OFFSET ' . $offset;
     $result = db_fetch_all_data($con, $sql, [$search]);
 } else {
     $result = '';
 }
-$pages_count = ceil($items_count / $page_items);
+$pages_count = ceil($items_count / $PAGE_ITEMS);
 $pages = range(1, $pages_count);
 
-$menu = include_template('nav_menu.php', ['categories' => $categories]);
+$menu = include_template('nav_menu.php', ['categories' => category_list($con)]);
 
 $pagination = include_template('pagination.php', [
     'pages' => $pages,
     'pages_count' => $pages_count,
-    'cur_page' => $cur_page,
+    'current_page' => $CURRENT_PAGE,
     'filename' => $filename,
     'search' => $search
 ]);
@@ -54,7 +55,7 @@ $add_content = include_template('search_lot.php', [
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
     'title' => 'Результаты поиска',
-    'categories' => $categories,
+    'categories' => category_list($con),
     'user_name' => $user_name
 ]);
 

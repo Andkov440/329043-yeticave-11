@@ -4,14 +4,14 @@
     <div class="lot-item__content">
         <div class="lot-item__left">
             <div class="lot-item__image">
-                <img src="../<?= esc($lot_data['image']); ?>" width="730" height="548"
+                <img src="uploads/<?= esc($lot_data['image']); ?>" width="730" height="548"
                      alt="<?= esc($lot_data['category_title']); ?>">
             </div>
             <p class="lot-item__category">Категория: <span><?= esc($lot_data['category_title']); ?></span></p>
             <p class="lot-item__description"><?= esc($lot_data['description']); ?></p>
         </div>
         <div class="lot-item__right">
-            <?php if (isset($_SESSION['user'])): ?>
+            <?php if (isset($_SESSION['user']) && ((strtotime($lot_data['end_date']) - 86400) > strtotime(date("Y-m-d"))) && ($_SESSION['user']['id'] <> $lot_data['user_id']) && ($_SESSION['user']['id'] <> $last_rate['user_id'])): ?>
                 <div class="lot-item__state">
                     <?php $timer = time_left($lot_data['end_date']); ?>
                     <div

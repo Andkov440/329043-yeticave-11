@@ -7,7 +7,7 @@ $errors = [];
 $new_rate = '';
 $user_name = $_SESSION['user']['name'] ?? '';
 
-$sql = 'SELECT l.title, l.starting_price, l.step_rate, l.image, l.description, l.end_date, c.title category_title
+$sql = 'SELECT l.title, l.starting_price, l.step_rate, l.image, l.description, l.end_date, l.user_id, c.title category_title
             FROM lot l
             INNER JOIN category c
             ON l.category_id = c.id
@@ -17,7 +17,6 @@ $lot_data = db_fetch_first_element($con, $sql);
 $sql = 'SELECT MAX(price) FROM rate WHERE lot_id = ' . $lot_number;
 $res = mysqli_query($con, $sql);
 $max_rate = $res ? mysqli_fetch_array($res, MYSQLI_NUM) : null;
-
 $min_rate = empty($max_rate[0]) ? ($lot_data['starting_price'] + $lot_data['step_rate']) : ($max_rate[0] + $lot_data['step_rate']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -45,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$sql = 'SELECT MAX(price) FROM rate WHERE lot_id = ' . $lot_number;
+/*$sql = 'SELECT MAX(price) FROM rate WHERE lot_id = ' . $lot_number;
 $res = mysqli_query($con, $sql);
 $max_rate = $res ? mysqli_fetch_array($res, MYSQLI_NUM) : null;
-$min_rate = empty($max_rate[0]) ? ($lot_data['starting_price'] + $lot_data['step_rate']) : ($max_rate[0] + $lot_data['step_rate']);
+$min_rate = empty($max_rate[0]) ? ($lot_data['starting_price'] + $lot_data['step_rate']) : ($max_rate[0] + $lot_data['step_rate']);*/
 
 $sql = 'SELECT r.creation_date, r.price, u.name
         FROM rate r
@@ -58,8 +57,16 @@ $sql = 'SELECT r.creation_date, r.price, u.name
 $rate_data = db_fetch_all_data($con, $sql);
 $count_rates = count($rate_data);
 
+$sql = 'SELECT l.id, r.user_id FROM lot l
+            INNER JOIN (SELECT lot_id, MAX(price) max_rate FROM rate GROUP BY lot_id) rates
+                ON l.id = rates.lot_id
+            INNER JOIN rate r
+                ON l.id = r.lot_id AND r.price = rates.max_rate
+            where l.id = ' . $lot_number;
+$last_rate = db_fetch_first_element($con, $sql);
+
 if ($lot_data) {
-    $menu = include_template('nav_menu.php', ['categories' => $categories]);
+    $menu = include_template('nav_menu.php', ['categories' => category_list($con)]);
 
     $lot_content = include_template('lot_page.php',
         [
@@ -69,13 +76,14 @@ if ($lot_data) {
             'max_rate' => $max_rate[0],
             'rate_data' => $rate_data,
             'errors' => $errors,
-            'count_rates' => $count_rates
+            'count_rates' => $count_rates,
+            'last_rate' => $last_rate
         ]);
 
     $layout_content = include_template('layout.php', [
         'content' => $lot_content,
         'title' => $lot_data['title'],
-        'categories' => $categories,
+        'categories' => category_list($con),
         'user_name' => $user_name
     ]);
 

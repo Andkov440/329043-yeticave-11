@@ -2,6 +2,8 @@
 require_once('init.php');
 require_once('functions.php');
 
+$user_name = $_SESSION['user']['name'] ?? '';
+
 if (isset($_SESSION['user'])) {
     $sql = 'SELECT l.id lotid, l.image lot_image, l.title lot_title, l.end_date lot_end_date, l.winner_id winner, l.creation_date, c.title category_title, r.creation_date creation_rate, r.price rate_price, u.contacts user_contacts from rate r
             INNER JOIN lot l ON l.id = r.lot_id
@@ -9,26 +11,26 @@ if (isset($_SESSION['user'])) {
             INNER JOIN users u ON r.user_id = u.id
             WHERE r.user_id =' . $_SESSION['user']['id'];
 
-    $data = db_fetch_all_data($con, $sql);
-    if ($data) {
-        $menu = include_template('nav_menu.php', ['categories' => $categories]);
+    $rates_result = db_fetch_all_data($con, $sql);
+    if ($rates_result) {
+        $menu = include_template('nav_menu.php', ['categories' => category_list($con)]);
 
         $rates_content = include_template('user_rates.php',
             [
-                'data' => $data,
+                'rates_result' => $rates_result,
                 'nav_menu' => $menu
             ]);
 
         $layout_content = include_template('layout.php', [
             'content' => $rates_content,
             'title' => 'Мои ставки',
-            'categories' => $categories,
+            'categories' => category_list($con),
             'user_name' => $user_name
         ]);
-
         print ($layout_content);
-    } else {
-        http_response_code('Location: 404.php', 404);
     }
+} else {
+    http_response_code(404);
+    include('404.php');
 }
 

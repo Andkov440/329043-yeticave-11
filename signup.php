@@ -61,13 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: login.php");
     }
 }
-$menu = include_template('nav_menu.php', ['categories' => $categories]);
+$menu = include_template('nav_menu.php', ['categories' => category_list($con)]);
 $add_content = include_template('signup_user.php', ['errors' => $errors, 'nav_menu' => $menu]);
 
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
     'title' => 'Регистрация',
-    'categories' => $categories,
+    'categories' => category_list($con),
 ]);
 
 print ($layout_content);

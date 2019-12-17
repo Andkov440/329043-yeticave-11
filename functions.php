@@ -2,15 +2,22 @@
 require_once('helpers.php');
 require_once('init.php');
 
-$category_ids = [];
-$user_name = $_SESSION['user']['name'] ?? '';
+/**
+ * Запрос к таблице категорий
+ * @param mysqli $link Ресурс соединения
+ * @return array Возвращает данные из таблицы категорий
+ */
 
-$sql = 'SELECT id, title, symbol_code FROM category';
-
-$categories = db_fetch_all_data($con, $sql);
-$category_ids = array_column($categories, 'id');
-
-$categories_count = count($categories);
+/**
+ * Запрос к таблице категорий
+ * @param mysqli $link Ресурс соединения
+ * @return array Возвращает данные из таблицы категорий
+ */
+function category_list($link)
+{
+    $sql = 'SELECT id, title, symbol_code FROM category';
+    return db_fetch_all_data($link, $sql);
+}
 
 /**
  * Форматирует отображение цены
@@ -35,7 +42,7 @@ function price_format($sum)
  */
 function esc($str)
 {
-    return htmlspecialchars($str);
+    return htmlspecialchars($str, ENT_QUOTES);
 }
 
 /**

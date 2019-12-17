@@ -2,7 +2,7 @@
 <section class="rates container">
     <h2>Мои ставки</h2>
     <table class="rates__list">
-        <?php foreach ($data as $item): ?>
+        <?php foreach ($rates_result as $item): ?>
             <?php if ((strtotime($item['lot_end_date']) - 86400) < strtotime(date("Y-m-d"))): ?>
                 <tr class="rates__item rates__item--end">
             <?php elseif (isset($item['winner'])): ?>
