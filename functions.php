@@ -7,12 +7,6 @@ require_once('init.php');
  * @param mysqli $link Ресурс соединения
  * @return array Возвращает данные из таблицы категорий
  */
-
-/**
- * Запрос к таблице категорий
- * @param mysqli $link Ресурс соединения
- * @return array Возвращает данные из таблицы категорий
- */
 function category_list($link)
 {
     $sql = 'SELECT id, title, symbol_code FROM category';
