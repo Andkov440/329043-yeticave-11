@@ -5,7 +5,7 @@
         <?php foreach ($data as $item): ?>
             <?php if ((strtotime($item['lot_end_date']) - 86400) < strtotime(date("Y-m-d"))): ?>
                 <tr class="rates__item rates__item--end">
-            <?php elseif (isset($item['winer'])): ?>
+            <?php elseif (isset($item['winner'])): ?>
                 <tr class="rates__item rates__item--win">
             <?php else: ?>
                 <tr class="rates__item">
@@ -15,7 +15,7 @@
                     <img src="../<?= esc($item['lot_image']); ?>" width="54" height="40"
                          alt="<?= esc($item['category_title']); ?>">
                 </div>
-                <?php if (isset($item['winer'])): ?>
+                <?php if (isset($item['winner'])): ?>
                     <div>
                         <h3 class="rates__title"><a
                                 href="lot.php?id=<?= esc($item['lotid']); ?>"><?= esc($item['lot_title']); ?></a></h3>
@@ -36,7 +36,7 @@
                     <div class="timer timer--end">
                         Торги окончены
                     </div>
-                <?php elseif (isset($item['winer'])): ?>
+                <?php elseif (isset($item['winner'])): ?>
                     <div class="timer timer--win">
                         Ставка выиграла
                     </div>

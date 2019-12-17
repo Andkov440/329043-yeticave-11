@@ -13,7 +13,7 @@ $message = new Swift_Message();
 $message->setSubject('Ваша ставка победила');
 $message->setFrom(['keks@phpdemo.ru']);
 
-$sql = 'SELECT l.id, l.title, r.user_id winer_id, u.name winer_name, u.email winer_email FROM lot l
+$sql = 'SELECT l.id, l.title, r.user_id winner_id, u.name winner_name, u.email winner_email FROM lot l
             INNER JOIN (SELECT lot_id, MAX(price) max_rate FROM rate GROUP BY lot_id) rates
                 ON l.id = rates.lot_id
             INNER JOIN rate r
@@ -21,24 +21,24 @@ $sql = 'SELECT l.id, l.title, r.user_id winer_id, u.name winer_name, u.email win
             INNER JOIN users u
                 ON u.id = r.user_id
             WHERE l.end_date <= NOW()
-                AND l.winer_id IS NULL
+                AND l.winner_id IS NULL
                 AND rates.max_rate IS NOT NULL';
 
-$winers_result = db_fetch_all_data($con, $sql);
+$winners_result = db_fetch_all_data($con, $sql);
 
-foreach ($winers_result as $item) {
-    $update_lot = 'UPDATE lot SET winer_id = ' . $item['winer_id'] . ' WHERE id = ' . $item['id'];
+foreach ($winners_result as $item) {
+    $update_lot = 'UPDATE lot SET winner_id = ' . $item['winner_id'] . ' WHERE id = ' . $item['id'];
     mysqli_query($con, $update_lot);
 
-    $message->addTo($item['winer_email'], $item['winer_name']);
+    $message->addTo($item['winner_email'], $item['winner_name']);
 
     $mail_data = include_template('email.php', [
-        'winer_name' => $item['winer_name'],
+        'winner_name' => $item['winner_name'],
         'lot_url' => 'lot.php?id=' . $item['id'],
         'rates_url' => 'rates.php',
         'lot_title' => $item['title']
     ]);
-    print($mail_data);
+
     $message->setBody($mail_data, 'text/html');
     $mailer->send($message);
 }

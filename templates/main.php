@@ -15,7 +15,7 @@
     </section>
     <section class="lots">
         <div class="lots__header">
-            <?php if (isset($category_id)): ?>
+            <?php if (!empty($category_id)): ?>
                 <h2>Все лоты в категории <?= $categories[$category_id - 1]['title']; ?></h2>
             <?php else: ?>
                 <h2>Открытые лоты</h2>

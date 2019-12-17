@@ -2,7 +2,7 @@
 require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
-require_once('getwiner.php');
+require_once('getwinner.php');
 
 $page_items = 9;
 $ids = $_GET['id'] ?? implode(', ', $category_ids);
@@ -36,14 +36,14 @@ $pagination = include_template('pagination.php', [
     'pages' => $pages,
     'pages_count' => $pages_count,
     'cur_page' => $cur_page,
-    'category_id' => $_GET['id'],
+    'category_id' => isset($_GET['id']),
     'filename' => $filename
 ]);
 
 $page_content = include_template('main.php', [
     'categories' => $categories,
     'goods' => $goods,
-    'category_id' => $_GET['id'],
+    'category_id' => isset($_GET['id']),
     'pagination' => $pagination
 ]);
 

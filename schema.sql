@@ -22,7 +22,7 @@ CREATE TABLE lot(
     end_date DATE NOT NULL,
     step_rate INT NOT NULL,
     user_id INT(10) NOT NULL,
-    winer_id INT(10),
+    winner_id INT(10),
     category_id INT(1) NOT NULL,
     PRIMARY KEY(id)
 );

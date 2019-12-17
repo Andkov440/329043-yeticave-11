@@ -75,8 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cat_id = db_fetch_first_element($con, $sql);
 
         $new_lot['username'] = $_SESSION['user']['id'];
-        $new_lot['winer'] = 100;
-        $sql = 'INSERT INTO lot (title, description, category_id, end_date, starting_price, step_rate, image, user_id, winer_id)
+        $sql = 'INSERT INTO lot (title, description, category_id, end_date, starting_price, step_rate, image, user_id, winner_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $lot_id = db_insert_data($con, $sql, $new_lot);
         header("Location: lot.php?id=" . $lot_id);
