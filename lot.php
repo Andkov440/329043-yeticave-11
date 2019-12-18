@@ -44,11 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-/*$sql = 'SELECT MAX(price) FROM rate WHERE lot_id = ' . $lot_number;
-$res = mysqli_query($con, $sql);
-$max_rate = $res ? mysqli_fetch_array($res, MYSQLI_NUM) : null;
-$min_rate = empty($max_rate[0]) ? ($lot_data['starting_price'] + $lot_data['step_rate']) : ($max_rate[0] + $lot_data['step_rate']);*/
-
 $sql = 'SELECT r.creation_date, r.price, u.name
         FROM rate r
         INNER JOIN users u
