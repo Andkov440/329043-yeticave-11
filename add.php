@@ -2,10 +2,12 @@
 require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
+
 if (!isset($_SESSION['user'])) {
     http_response_code(403);
     exit();
 }
+$category_ids = array_column(category_list($con), 'id');
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required = ['lot-name', 'category', 'message', 'lot-rate', 'lot-date', 'lot-step'];
@@ -74,19 +76,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cat_id = db_fetch_first_element($con, $sql);
 
         $new_lot['username'] = $_SESSION['user']['id'];
-        $new_lot['winer'] = 100;
-        $sql = 'INSERT INTO lot (title, description, category_id, end_date, starting_price, step_rate, image, user_id, winer_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO lot (title, description, category_id, end_date, starting_price, step_rate, image, user_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
         $lot_id = db_insert_data($con, $sql, $new_lot);
         header("Location: lot.php?id=" . $lot_id);
     }
 }
-$menu = include_template('nav_menu.php', ['categories' => $categories]);
-$add_content = include_template('add_lot.php', ['nav_menu' => $menu, 'errors' => $errors, 'categories' => $categories]);
+$menu = include_template('nav_menu.php', ['categories' => category_list($con)]);
+$add_content = include_template('add_lot.php',
+    ['nav_menu' => $menu, 'errors' => $errors, 'categories' => category_list($con)]);
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
     'title' => 'Добавление лота',
-    'categories' => $categories,
+    'categories' => category_list($con),
     'user_name' => $_SESSION['user']['name']
 ]);
 

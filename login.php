@@ -2,7 +2,7 @@
 require_once('init.php');
 require_once('functions.php');
 require_once('helpers.php');
-
+$user_name = $_SESSION['user']['name'] ?? '';
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -36,12 +36,12 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 
-$menu = include_template('nav_menu.php', ['categories' => $categories]);
+$menu = include_template('nav_menu.php', ['categories' => category_list($con)]);
 $add_content = include_template('login_user.php', ['nav_menu' => $menu, 'errors' => $errors]);
 $layout_content = include_template('layout.php', [
     'content' => $add_content,
     'title' => 'Вход',
-    'categories' => $categories,
+    'categories' => category_list($con),
     'user_name' => $user_name
 ]);
 print ($layout_content);
