@@ -1,4 +1,5 @@
 <?= $nav_menu; ?>
+
 <div class="container">
     <section class="lots">
         <?php if (empty($result)): ?>
