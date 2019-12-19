@@ -9,9 +9,9 @@ if (isset($_SESSION['user'])) {
             INNER JOIN lot l ON l.id = r.lot_id
             INNER JOIN category c ON l.category_id = c.id
             INNER JOIN users u ON r.user_id = u.id
-            WHERE r.user_id =' . $_SESSION['user']['id'];
+            WHERE r.user_id = ?';
 
-    $rates_result = db_fetch_all_data($con, $sql);
+    $rates_result = db_fetch_all_data($con, $sql, [$_SESSION['user']['id']]);
     if ($rates_result) {
         $menu = include_template('nav_menu.php', ['categories' => category_list($con)]);
 

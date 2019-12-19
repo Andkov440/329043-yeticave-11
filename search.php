@@ -12,14 +12,16 @@ $offset = ($CURRENT_PAGE - 1) * $PAGE_ITEMS;
 
 if (!empty($search)) {
     $search = trim($search);
-
-    $count_sql = mysqli_query($con,
-        'SELECT COUNT(*) as cnt
+    $sql = 'SELECT COUNT(*) as cnt
                 FROM lot
-                WHERE MATCH(title, description) AGAINST("' . $search . '")
-                AND end_date > NOW()');
+                WHERE MATCH(title, description) AGAINST(?)
+                AND end_date > NOW()';
+    $result = db_fetch_first_element($con, $sql, [$search]);
 
-    $items_count = mysqli_fetch_assoc($count_sql)['cnt'];
+    $items_count = $result['cnt'];
+
+    $PAGE_ITEMS = mysqli_real_escape_string($con, $PAGE_ITEMS);
+    $offset = mysqli_real_escape_string($con, $offset);
 
     $sql = 'SELECT id, title, starting_price, image, step_rate, end_date
             FROM lot

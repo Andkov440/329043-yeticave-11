@@ -72,9 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!count($errors)) {
         move_uploaded_file($_FILES['jpg_img']['tmp_name'], 'uploads/' . $filename);
         $new_lot['path'] = $filename;
-        $sql = "SELECT id FROM category WHERE title = '" . $new_lot['category'] . "'";
-        $cat_id = db_fetch_first_element($con, $sql);
-
         $new_lot['username'] = $_SESSION['user']['id'];
         $sql = 'INSERT INTO lot (title, description, category_id, end_date, starting_price, step_rate, image, user_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)';

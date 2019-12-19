@@ -27,8 +27,9 @@ $sql = 'SELECT l.id, l.title, r.user_id winner_id, u.name winner_name, u.email w
 $winners_result = db_fetch_all_data($con, $sql);
 
 foreach ($winners_result as $item) {
-    $update_lot = 'UPDATE lot SET winner_id = ' . $item['winner_id'] . ' WHERE id = ' . $item['id'];
-    mysqli_query($con, $update_lot);
+    $update_array = [$item['winner_id'], $item['id']];
+    $update_lot = 'UPDATE lot SET winner_id = ? WHERE id = ?';
+    db_update_data($con, $update_lot, $update_array);
 
     $message->addTo($item['winner_email'], $item['winner_name']);
 

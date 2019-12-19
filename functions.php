@@ -107,6 +107,20 @@ function db_insert_data($link, $sql, $data = [])
 }
 
 /**
+ * Обновляет данные в БД с помощью подготовленных выражений
+ * @param mysqli $link Ресурс соединения
+ * @param string $sql SQL запрос с плейсхолдерами вместо значений
+ * @param array $data Данные для вставки на место плейсхолдеров
+ * @return int Возвращает успех или ошибку
+ */
+function db_update_data($link, $sql, $data = [])
+{
+    $stmt = db_get_prepare_stmt($link, $sql, $data);
+    $result = mysqli_stmt_execute($stmt);
+    return ($result) ?? die('Ошибка соединения с БД');
+}
+
+/**
  * Проверяет, что значение больше ноля
  * @param int $value Число
  * @return string Возвращает текст ошибки

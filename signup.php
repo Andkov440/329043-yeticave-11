@@ -46,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new_user[$key] = trim($new_user[$key]);
     }
 
-    $sql = "SELECT id FROM users WHERE email = '" . $new_user['email'] . "'";
-    $res = mysqli_query($con, $sql);
-    if (mysqli_num_rows($res) > 0) {
+    $sql = 'SELECT id FROM users WHERE email = ?';
+    $res = db_fetch_all_data($con, $sql, [$new_user['email']]);
+    if (count($res) > 0) {
         $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
     }
     $errors = array_filter($errors);

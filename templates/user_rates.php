@@ -12,7 +12,7 @@
             <?php endif ?>
             <td class="rates__info">
                 <div class="rates__img">
-                    <img src="../<?= esc($item['lot_image']); ?>" width="54" height="40"
+                    <img src="uploads/<?= esc($item['lot_image']); ?>" width="54" height="40"
                          alt="<?= esc($item['category_title']); ?>">
                 </div>
                 <?php if (isset($item['winner'])): ?>
