@@ -32,7 +32,7 @@
                             <label for="cost">Ваша ставка</label>
                             <input id="cost" type="text" name="cost" placeholder="<?= $min_rate; ?>"
                                    value="<?= isset($errors['cost']) ? $_POST['cost'] : $min_rate; ?>">
-                            <span class="form__error"><?= $errors['cost']; ?></span>
+                            <span class="form__error"><?= $errors['cost'] ?? ''; ?></span>
                         </p>
                         <button type="submit" class="button">Сделать ставку</button>
                     </form>

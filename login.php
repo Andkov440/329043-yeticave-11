@@ -16,16 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $form[$field] = trim($form[$field]);
     }
 
-    $sql = "SELECT * FROM users WHERE email = '" . $form['email'] . "'";
-    $res = mysqli_query($con, $sql);
-    $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+    $sql = 'SELECT * FROM users WHERE email = ?';
+    $res = db_fetch_first_element($con, $sql, [$form['email']]);
+    $user = $res ?? null;
     if (!count($errors)) {
         if (password_verify($form['password'], $user['password'])) {
             $_SESSION['user'] = $user;
         } else {
             $errors['password'] = 'Вы ввели неправильный логин/пароль';
         }
-        if (mysqli_num_rows($res) === 0) {
+        if (count($res) === 0) {
             $errors['email'] = 'Такой пользователь не найден';
         }
     }
