@@ -36,18 +36,19 @@ INSERT INTO rate (creation_date, price, lot_id, user_id)
 VALUES ('2019-10-19 10:11:13', 9200, 3, 1),
        ('2019-10-19 10:11:13', 5600, 6, 2);
 
-SELECT * FROM category;
+SELECT *
+FROM category;
 
 SELECT l.title, l.starting_price, l.image, l.step_rate, l.end_date, c.title
 FROM lot l
-    INNER JOIN category c
-    ON l.category_id = c.category_id
+         INNER JOIN category c
+                    ON l.category_id = c.category_id
 WHERE end_date > NOW();
 
 SELECT l.title
 FROM lot l
-    INNER JOIN category c
-    ON l.category_id = c.category_id
+         INNER JOIN category c
+                    ON l.category_id = c.category_id
 WHERE lot_id = 3;
 
 UPDATE lot
@@ -56,7 +57,7 @@ WHERE lot_id = 2;
 
 SELECT lot.title, rate.creation_date, rate.price
 FROM rate
-    INNER JOIN lot
-    ON rate.lot_id = lot.lot_id
+         INNER JOIN lot
+                    ON rate.lot_id = lot.lot_id
 WHERE lot.lot_id = 3
 ORDER BY rate.creation_date;
